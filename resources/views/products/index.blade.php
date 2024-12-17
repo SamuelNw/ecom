@@ -35,6 +35,10 @@
             text-transform: uppercase;
         }
 
+        form {
+            margin-bottom: 30px;
+        }
+
         ul {
             list-style-type: none;
             padding: 0;
@@ -101,6 +105,21 @@
 <body>
     <div>
         <h1>Product List</h1>
+
+        <!-- Search Form -->
+        <form method="GET" action="{{ route('products.index') }}">
+            <input 
+                type="text" 
+                name="search" 
+                placeholder="Search products..." 
+                value="{{ request('search') }}" 
+                style="padding: 8px; border-radius: 5px; border: 1px solid #ccc;"
+            >
+            <button type="submit" style="padding: 8px 12px; border-radius: 5px; border: none; background-color: #f9a825; color: white; cursor: pointer;">
+                🔍 Search
+            </button>
+        </form>
+
         <ul>
             @foreach ($products as $product)
                 <li>
@@ -113,6 +132,10 @@
                 </li>
             @endforeach
         </ul>
+
+        @if($products->isEmpty())
+            <p>No products found matching your search.</p>
+        @endif
 
         <div class="footer">
             Copyright@laravel-test 2024

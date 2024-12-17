@@ -11,17 +11,15 @@ class ProductController extends Controller
 {
     public function index(Request $request)
     {
-        // If there's a search term, filter products
-        $query = Product::query();
+        // Get the search term from the request
+        $search = $request->input('search');
 
-        if ($request->has('search')) {
-            $query->where('name', 'like', '%' . $request->search . '%')
-                  ->orWhere('description', 'like', '%' . $request->search . '%');
-        }
+        // Query to fetch products based on the search term
+        $products = Product::when($search, function ($query, $search) {
+            return $query->where('name', 'LIKE', "%{$search}%");
+        })->get();
 
-        // Get products with pagination (optional)
-        $products = $query->paginate(20);
-
-        return view('products.index', compact('products'));
+        // Pass the products and search term to the view
+        return view('products.index', ['products' => $products]);
     }
 }

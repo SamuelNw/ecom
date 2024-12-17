@@ -30,6 +30,8 @@ class ProductController extends Controller
             ->get();
 
         // Return the results as JSON
-        return response()->json($results);
+        // return response()->json($results);
+
+        return view('search.results', compact('results'));
     }
 }

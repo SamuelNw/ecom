@@ -35,8 +35,8 @@ jobs:
 
       - name: Build and push Docker image
         run: |
-          docker build -t your_dockerhub_username/laravel-app:${{ github.sha }} .
-          docker push your_dockerhub_username/laravel-app:${{ github.sha }}
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/laravel-app:${{ github.sha }} .
+          docker push ${{ secrets.DOCKER_USERNAME }}/laravel-app:${{ github.sha }}
 
   deploy:
     runs-on: ubuntu-latest
@@ -46,8 +46,8 @@ jobs:
     steps:
       - name: Set up kubectl
         uses: azure/setup-kubectl@v1
-        with:
-          kubectl-version: "v1.24.0"
+        # with:
+        # kubectl-version: "v1.24.0"
 
       - name: Configure kubectl
         run: |

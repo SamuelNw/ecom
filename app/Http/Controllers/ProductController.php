@@ -20,7 +20,7 @@ class ProductController extends Controller
         }
 
         // Get products with pagination (optional)
-        $products = $query->paginate(10);
+        $products = $query->paginate(20);
 
         return view('products.index', compact('products'));
     }
